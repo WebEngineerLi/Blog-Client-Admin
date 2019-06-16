@@ -1,8 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
+import { AppContainer } from 'react-hot-loader';
+import App from './App';
 
-ReactDOM.render(
-	<App />,
-	document.getElementById('root')
-)
+renderWithHotReload(App);
+
+if (module.hot) {
+	module.hot.accept("./App/index.js", () => {
+		const App = require("./App/index.js").default;
+		renderWithHotReload(App);
+	});
+}
+
+const renderWithHotReload = (App) => {
+	ReactDOM.render(
+		<AppContainer>
+			<App />
+		</AppContainer>,
+		document.getElementById("root")
+	);
+}
