@@ -13,12 +13,13 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist')
 	},
 	devServer: {
-		hot: true,
+		hot: true, // 热模块更替
 		contentBase: path.resolve(__dirname, 'dist'),
 		port: '8888',
 		inline: true,
 		open: true,
-	},
+  },
+  devtool: 'cheap-module-eval-source-map',
 	module: {
 		rules: [
 			{
@@ -43,11 +44,55 @@ module.exports = {
 						loader: 'babel-loader',
 					}
 				]
-			}
+      },
+      {
+        test: /\.css/,
+        exclude: '/node-modules',
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.less/,
+        exclude: '/node-modules',
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          'postcss-loader',
+          'less-loader'
+        ]
+      },
+      {
+        test: /\.scss/,
+        exclude: '/node-modules',
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }
 		]
 	},
 	plugins: [
-		new Webpack.HotModuleReplacementPlugin(),
+		new Webpack.HotModuleReplacementPlugin(), // 热模块更替，改完代码之后只需要局部代码重新编译刷新即可
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
       filename: 'index.html', // 最终创建的文件名: 注意相对的路径是output.path
