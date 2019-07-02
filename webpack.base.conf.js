@@ -2,6 +2,11 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
+const handler = (percentage, message, ...args) => {
+  // e.g. Output each progress message directly to the console:
+  console.info(`[${percentage.toFixed(2) * 100}%]`, message, ...args);
+};
+
 
 module.exports = {
 	mode: 'development',
@@ -52,6 +57,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
       filename: 'index.html', // 最终创建的文件名: 注意相对的路径是output.path
       template: path.join(__dirname, 'src/template.html') // 指定模板路径
-    })
+		}),
+		new Webpack.ProgressPlugin(handler)
 	]
 }
