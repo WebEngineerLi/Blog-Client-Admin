@@ -17,13 +17,6 @@ module.exports = {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'dist')
 	},
-	devServer: {
-		hot: true,
-		contentBase: path.resolve(__dirname, 'dist'),
-		port: '8888',
-		inline: true,
-		open: true,
-	},
 	module: {
 		rules: [
 			{
