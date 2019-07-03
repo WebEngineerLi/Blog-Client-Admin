@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
-import imgjjy from './img/jjy1.jpeg';
+import React, { Component, Fragment } from 'react';
+import CSSModules from 'react-css-modules';
+import imgjjy from './img/jjy1.jpeg'
+import styles from './index.less';
 
 class App extends Component {
 	render() {
 		return (
-			<img src={imgjjy} />
+      <Fragment>
+        <div styleName="bg-img"></div>
+      </Fragment>
 		)
 	}
 }
-export default App;
+export default CSSModules(App, styles);
