@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules';
 import imgjjy from './img/jjy1.jpeg'
 import styles from './index.less';
 
+@CSSModules(styles)
 class App extends Component {
 	render() {
 		return (
@@ -12,4 +13,4 @@ class App extends Component {
 		)
 	}
 }
-export default CSSModules(App, styles);
+export default App;
