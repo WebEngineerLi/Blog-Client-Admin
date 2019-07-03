@@ -9,7 +9,7 @@ class App extends Component {
 		return (
       <Fragment>
         <div styleName="bg-img"></div>
-      </Fragment>
+      </Fragment> 
 		)
 	}
 }
