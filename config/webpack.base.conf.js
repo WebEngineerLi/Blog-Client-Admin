@@ -16,6 +16,17 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, '../dist'),
+	},
+	resolve: {
+		alias: {
+			Utils: path.resolve(__dirname, '../src/utils')  // 命名
+		},
+		extensions: ['.wasm', '.mjs', '.js', '.json']  // 省略扩展
+	},
+	optimization: {
+    splitChunks: {
+			chunks: "all", // 所有的 chunks 代码公共的部分分离出来成为一个单独的文件
+    },
   },
   module: {
     rules: [
@@ -111,8 +122,12 @@ module.exports = {
       template: path.join(__dirname, '../src/template.html') // 指定模板路径
     }),
     new Webpack.ProgressPlugin(handler),
+		// new MiniCssExtractPlugin({
+		// 	filename:"main.css"
+		// })
 		new MiniCssExtractPlugin({
-			filename:"main.css"
-		})
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
   ]
 }
