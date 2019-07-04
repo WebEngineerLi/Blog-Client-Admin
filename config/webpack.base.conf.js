@@ -4,8 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const handler = (percentage, message, ...args) => {
   // e.g. Output each progress message directly to the console:
-	// console.info(`[${percentage.toFixed(2) * 100}%]`, message, args);
-	// console.clear();
+	console.info(`[${percentage.toFixed(2) * 100}%]`, message, args);
 };
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -75,7 +74,6 @@ module.exports = {
       },
       {
         test: /\.less$/,
-				exclude: '/node-modules',
 				use: [
 					{
 						loader: MiniCssExtractPlugin.loader,
@@ -84,17 +82,29 @@ module.exports = {
 						}
 					}, {
 						loader: 'css-loader',
-						options: {
-							modules: true,
-							localIdentName: '[path]__[name]__[local]__[hash:base64:6]'
-						}
+						// options: {
+						// 	modules: true,
+						// 	localIdentName: '[path]__[name]__[local]__[hash:base64:6]'
+						// }
 					},
 					'postcss-loader',
-					"less-loader"
+					{
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'primary-color': '#1DA57A',
+                'link-color': '#1DA57A',
+                'border-radius-base': '2px',
+                 // or
+                //  'hack': `true; @import "your-less-file-path.less";`, // Override with less file
+               },
+              javascriptEnabled: true
+            }
+          }
 				]
       },
       {
-        test: /\.scss$/,
+        test: /\.scss$|\.sass$/,
 				exclude: '/node-modules',
 				use: [
 					{
@@ -110,7 +120,7 @@ module.exports = {
 						}
 					},
 					'postcss-loader',
-					'scss-loader'
+					'sass-loader'
 				]
       }
     ]

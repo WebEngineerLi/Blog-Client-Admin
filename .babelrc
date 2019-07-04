@@ -2,6 +2,11 @@
 	"presets": ["@babel/preset-env", "@babel/preset-react"],
 	"plugins": [
 		"@babel/plugin-transform-runtime",
-		["@babel/plugin-proposal-decorators", { "legacy": true }] // babel v7 使用这个
+    ["@babel/plugin-proposal-decorators", { "legacy": true }], // babel v7 使用这个，用来处理修饰器
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": true // `style: true` 会加载 less 文件
+    }]
 	]
 }
