@@ -15,9 +15,15 @@
 		[
 			"@babel/plugin-proposal-decorators",
 			{
-				"legacy": true
+				"legacy": true,
 			}
 		], // babel v7 使用这个，用来处理修饰器
+		[
+			"@babel/plugin-proposal-class-properties",
+			{
+				"loose": true,
+			}
+		],
 		[
 			"import",
 			{
