@@ -1,5 +1,4 @@
 {
   "git.ignoreLimitWarning": true,
-  "editor.find.addExtraSpaceOnTop": false,
-  "editor.fontFamily": "Consolas"
+	"editor.find.addExtraSpaceOnTop": false
 }
