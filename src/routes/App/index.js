@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ImageConfig from '../ImageConfig';
 import FormComponent from '../FormComponent';

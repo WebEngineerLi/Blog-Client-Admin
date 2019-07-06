@@ -1,8 +1,9 @@
 import qs from 'querystring';
+import React from 'react';
 import { Modal } from 'antd';
-import axios from 'axios'
-import { createBrowserHistory } from 'history';
-import { clearAllCookie } from '../utils/cookie';
+// import axios from 'axios'
+// import { createBrowserHistory } from 'history';
+// import { clearAllCookie } from '../utils/cookie';
 import _ from 'lodash';
 
 async function parseJSON(response) {
@@ -11,14 +12,14 @@ async function parseJSON(response) {
 	if (rst.success) {
 		return promise;
 	} else {
-    const close = () => {
-      const { code } = rst;
-      if(code === "TokenExpiredError") {
-        const history = createBrowserHistory();
-        clearAllCookie();
-        history.replace('/login');
-      }
-    }
+    // const close = () => {
+    //   const { code } = rst;
+    //   if(code === "TokenExpiredError") {
+    //     const history = createBrowserHistory();
+    //     clearAllCookie();
+    //     history.replace('/login');
+    //   }
+    // }
 		Modal.error({
 			centered: true,
 			title: '错误反馈',
@@ -37,7 +38,7 @@ export default function request(url, optionsParam = {}) {
   // 默认配置
   const defaultOptions = {
 		mode: 'cors',
-		credentials: "include",
+		// credentials: "include",
   }
   // 合并默认配置、自定义配置，用自定义配置覆盖默认配置
   const options = {
@@ -56,8 +57,6 @@ export default function request(url, optionsParam = {}) {
 			options.headers['Content-Type'] = 'application/json';
 		}
 	}
-	console.log('options:', options);
-	
   return fetch(finalUrl, options)
     .then(parseJSON)
 }

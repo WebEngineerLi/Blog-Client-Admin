@@ -1,13 +1,8 @@
-// import loginSagas from './models/login';
-// import usersSagas from './models/users';
-// import fileSagas from './models/files';
-// import myFileSagas from './models/myFile'
+import { all } from 'redux-saga/effects'
+import blogSagas from './models/blog'
 
 export default function* rootSaga() {
-	yield [
-		// loginSagas(),
-		// usersSagas(),
-		// fileSagas(),
-		// myFileSagas()
-	]
+	yield all([
+		blogSagas()
+	])
 }

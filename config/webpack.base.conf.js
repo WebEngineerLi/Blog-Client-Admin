@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const handler = (percentage, message, ...args) => {
   // e.g. Output each progress message directly to the console:
-	console.info(`[${percentage.toFixed(2) * 100}%]`, message, args);
+	console.info(`[${percentage.toFixed(2) * 100}%]`, message, args[0], args[1]);
 };
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 

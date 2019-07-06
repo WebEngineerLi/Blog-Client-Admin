@@ -5,8 +5,9 @@ import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import BlogMenu from '../../components/BlogMenu'
-import MarkDownEditor from '../../components/MarkDownEditor';
 import styles from './index.scss';
+import { connect } from 'react-redux';
+import { model, selectors } from '../../models/blog';
 
 
 const FormItem = Form.Item;
@@ -14,8 +15,39 @@ const formLayout = {
 	labelCol: { offset: 0, span: 5 },
 	wrapperCol: { offset: 0, span: 15 }
 }
+const mapStateToProps = (state) => ({
+	blogList: selectors.blogList(state)
+})
+const mapDisaptchToProps = (dispatch) => ({
+	saveBlog(params, callback) {
+		dispatch({
+			type: `${model.namespace}/saveBlog`,
+			payload: params,
+			callback
+		})
+	},
+	getBlogList() {
+		dispatch({
+			type: `${model.namespace}/blogList`
+		})
+	},
+	getBlogDetail(params, callback) {
+		dispatch({
+			type: `${model.namespace}/blogDetail`,
+			payload: params,
+			callback
+		})
+	},
+	deleteBlog(params) {
+		dispatch({
+			type: `${model.namespace}/blogDetail`,
+			payload: params,
+		})
+	}
+})
 
 @Form.create()
+@connect(mapStateToProps, mapDisaptchToProps)
 @CSSModules(styles)
 class Blog extends Component {
 	constructor(props) {
@@ -23,7 +55,8 @@ class Blog extends Component {
 		this.state = {
 			tags: [],
 			showInput: false,
-			selectedTab: 'write'
+			selectedTab: 'write',
+			blogId: '',
 		}
 		this.converter = new Showdown.Converter({
 			tables: true,
@@ -33,10 +66,34 @@ class Blog extends Component {
 		});
 		this.saveInputRef = React.createRef();
 		this.saveDraft = this.saveDraft.bind(this);
+		this.handleSelect = this.handleSelect.bind(this);
+		this.handleDelete = this.handleDelete.bind(this)
+	}
+
+	componentDidMount() {
+		this.props.getBlogList();
+	}
+
+	handleDelete() {
+	}
+
+	handleSelect(node) {
+		const { key } = node;
+		this.setState({ blogId: key })
+		const params = {
+			blogId: key
+		}
+		const callback = (res) => {
+			const { form: { setFieldsValue } } = this.props;
+			setFieldsValue(res);
+			const { blogTags } = res;
+			this.setState({ tags: blogTags.split(',') });
+		}
+		this.props.getBlogDetail(params, callback)
 	}
 
 	saveDraft() {
-		const { form: { validateFields } } = this.props;
+		const { form: { validateFields, setFieldsValue } } = this.props;
 		const { tags } = this.state;
 		validateFields((errors, values) => {
 			if (errors) {
@@ -44,9 +101,18 @@ class Blog extends Component {
 			}
 			const params = {
 				...values,
-				tags: tags.join(','),
+				blogTags: tags.join(','),
 			}
-			console.log('params:', params);
+			const callback = (res) => {
+				if (res) {
+					setFieldsValue({
+						blogTitle: '',
+						blogContent: '',
+					})
+					this.setState({ tags: [] })
+				}
+			}
+			this.props.saveBlog(params, callback)
 		})
 	}
 
@@ -105,11 +171,11 @@ class Blog extends Component {
 
 	renderContent() {
 		const { form: { getFieldDecorator } } = this.props;
-		const { tags, showInput, selectedTab } = this.state;
+		const { tags, showInput, selectedTab, blogId } = this.state;
 		return (
 			<Form layout="horizontal">
 				<FormItem label="标题" {...formLayout}>
-					{getFieldDecorator('title', {
+					{getFieldDecorator('blogTitle', {
 						rules: [{ required: true, message: '请输入标题' }]
 					})(
 						<Input placeholder="请输入标题" />
@@ -123,7 +189,7 @@ class Blog extends Component {
 				</FormItem>
 				<FormItem label="内容" {...formLayout}>
 					{
-						getFieldDecorator('markdown')(
+						getFieldDecorator('blogContent')(
 							<ReactMde
 								selectedTab={selectedTab}
 								onTabChange={(selectedTab) => { this.setState({ selectedTab }) }}
@@ -136,18 +202,21 @@ class Blog extends Component {
 				</FormItem>
 				<FormItem wrapperCol={{ offset: 5 }}>
 					<Button styleName="btn" type="primary" onClick={this.saveDraft}>保存草稿</Button>
-					<Button styleName="btn">发布</Button>
-					<Button styleName="btn">下线</Button>
-					<Button styleName="btn" type="danger">删除</Button>
+					<Button styleName="btn">保存并发布</Button>
+					{blogId && <Fragment>
+						<Button styleName="btn">下线</Button>
+						<Button styleName="btn" type="danger" onClick={this.handleDelete}>删除</Button>
+					</Fragment>}
 				</FormItem>
 			</Form>
 		)
 	}
 	render() {
+		const { blogList } = this.props;
 		return (
 			<div styleName="wrap">
 				<div styleName="menu">
-					<BlogMenu {...this.props} />
+					<BlogMenu {...this.props} blogList={blogList} onSelect={this.handleSelect} />
 				</div>
 				<div styleName="content">
 					{this.renderContent()}

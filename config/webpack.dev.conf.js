@@ -12,5 +12,20 @@ module.exports = merge(base, {
     inline: true,
 		open: true,
 		historyApiFallback: true,
-  },
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jsx?$/,
+				enforce: "pre",
+				exclude: '/node_modules/',
+				use: [{
+					loader: 'eslint-loader',
+					options: {
+						fix: true
+					}
+				}],
+			}
+		]
+	}
 })
