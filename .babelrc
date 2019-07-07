@@ -1,10 +1,11 @@
 {
 	"presets": [
 		[
-			"@babel/preset-env",
+			"@babel/preset-env", // es2015+
 			{
 				"targets": {
-					"chrome": "45"
+          // "chrome": "45"
+          "browsers": "chrome >= 45"
 				}
 			}
 		],
@@ -32,6 +33,6 @@
 				"style": true // `style: true` 会加载 less 文件
 			}
 		],
-		"@babel/transform-arrow-functions"
+		"@babel/transform-arrow-functions" // babel v7中舍弃了 stage-x 所以只能用plugin来处理 箭头函数
 	]
 }
