@@ -33,6 +33,22 @@ function *blogDetail({ payload, callback = '' }) {
 		callback && callback(res.data[0])
 	}
 }
+function *modifyBlog({ payload, callback }) {
+	const params = {
+		method: 'post',
+		body: payload
+	}
+	const res = yield call(services.blogUpdate, params)
+}
+function *blogDelete({ payload, callback }) {
+	const res = yield call(services.blogDelete, payload)
+	if (res.success === true) {
+		message.success('删除成功');
+		yield put({
+			type: `${NAMESPACE}/blogList`
+		})
+	}
+}
 
 
 // 导出一个对本模块监听的saga文件 
@@ -40,4 +56,6 @@ export default function* blogSagas() {
 	yield takeEvery(`${NAMESPACE}/saveBlog`, saveBlog)
 	yield takeEvery(`${NAMESPACE}/blogList`, blogList)
 	yield takeEvery(`${NAMESPACE}/blogDetail`, blogDetail)
+	yield takeEvery(`${NAMESPACE}/modifyBlog`, modifyBlog)
+	yield takeEvery(`${NAMESPACE}/blogDelete`, blogDelete)
 }

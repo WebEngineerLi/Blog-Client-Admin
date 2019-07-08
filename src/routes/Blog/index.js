@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Form, Input, Tag, Icon } from 'antd';
+import { Button, Form, Input, Tag, Icon, Popconfirm } from 'antd';
 import CSSModules from 'react-css-modules';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
@@ -41,10 +41,16 @@ const mapDisaptchToProps = (dispatch) => ({
   },
   deleteBlog(params) {
     dispatch({
-      type: `${model.namespace}/blogDetail`,
+      type: `${model.namespace}/blogDelete`,
       payload: params,
     })
-  }
+	},
+	modifyBlog(params) {
+		dispatch({
+			type: `${model.namespace}/modifyBlog`,
+			payload: params,
+		})
+	}
 })
 
 @Form.create()
@@ -77,6 +83,8 @@ class Blog extends Component {
   }
 
   handleDelete() {
+		const { blogId } = this.state;
+		this.props.deleteBlog({ blogId })
   }
 
   handleSelect(node) {
@@ -214,8 +222,15 @@ class Blog extends Component {
           <Button styleName="btn" type="primary" onClick={this.saveDraft}>保存草稿</Button>
           {blogId && currentData.blogStatus === "0" && <Button styleName="btn">发布</Button>}
           {blogId && <Fragment>
-            {currentData.blogStatus === "1" && <Button styleName="btn">下线</Button>}
-            <Button styleName="btn" type="danger" onClick={this.handleDelete}>删除</Button>
+						{currentData.blogStatus === "1" && <Button styleName="btn">下线</Button>}
+						<Popconfirm
+							title="您确定要删除吗"
+							onConfirm={this.handleDelete}
+							okText="Yes"
+							cancelText="No"
+						>
+	            <Button styleName="btn" type="danger">删除</Button>
+						</Popconfirm>,
           </Fragment>}
         </FormItem>
       </Form>
