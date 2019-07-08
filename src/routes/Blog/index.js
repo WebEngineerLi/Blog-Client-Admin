@@ -10,7 +10,7 @@ import styles from './index.scss';
 import { connect } from 'react-redux';
 import { model, selectors } from '../../models/blog';
 
-
+const { TextArea } = Input;
 const FormItem = Form.Item;
 const formLayout = {
   labelCol: { offset: 0, span: 5 },
@@ -182,6 +182,13 @@ class Blog extends Component {
             rules: [{ required: true, message: '请输入标题' }]
           })(
             <Input placeholder="请输入标题" />
+          )}
+        </FormItem>
+				<FormItem label="描述" {...formLayout}>
+          {getFieldDecorator('blogDescription', {
+            rules: [{ required: true, message: '请输入描述内容' }]
+          })(
+            <TextArea placeholder="请输入描述内容" />
           )}
         </FormItem>
         <FormItem label="标签" {...formLayout}>
