@@ -2,7 +2,8 @@ import { handleActions } from 'redux-actions';
 import { NAMESPACE } from './constants';
 
 const initState = {
-	blogList: []
+	blogList: [],
+	currentData: {}
 };
 
 // 定义并导出reducers

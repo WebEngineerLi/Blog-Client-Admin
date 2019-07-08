@@ -8,4 +8,8 @@ export const blogDetail = (config = {}) => request(`${baseUrl}/service/blog/deta
 
 export const blogUpdate = (config = {}) => request(`${baseUrl}/service/blog/update`, config)
 
-export const blogDetete = (config = {}) => request(`${baseUrl}/service/blog/delete`, config)
+export const blogDelete = (config = {}) => request(`${baseUrl}/service/blog/delete`, config)
+
+export const publishBlog = (config = {}) => request(`${baseUrl}/service/blog/publish`, config)
+
+export const offlineBlog = (config = {}) => request(`${baseUrl}/service/blog/offline`, config)

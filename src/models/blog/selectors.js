@@ -4,3 +4,8 @@ export const blogList = (state) => {
 	const currentState = getState(state);
 	return currentState.blogList
 }
+
+export const getCurrentData = (state) => {
+	const currentState = getState(state);
+	return currentState.currentData
+}
