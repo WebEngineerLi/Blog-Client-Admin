@@ -13,8 +13,8 @@ import { model, selectors } from '../../models/blog';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const formLayout = {
-	labelCol: { offset: 0, span: 5 },
-	wrapperCol: { offset: 0, span: 15 }
+	labelCol: { offset: 0, span: 2 },
+	wrapperCol: { offset: 0, span: 21 }
 }
 const mapStateToProps = (state) => ({
 	blogList: selectors.blogList(state),
@@ -220,7 +220,7 @@ class Blog extends Component {
 		const { tags, showInput, selectedTab, blogId } = this.state;
 		
 		return (
-			<Form layout="horizontal">
+			<Form layout="horizontal" styleName="form">
 				<FormItem label="标题" {...formLayout}>
 					{getFieldDecorator('blogTitle', {
 						rules: [{ required: true, message: '请输入标题' }]
@@ -254,7 +254,7 @@ class Blog extends Component {
 						)
 					}
 				</FormItem>
-				<FormItem wrapperCol={{ offset: 5 }}>
+				<FormItem wrapperCol={{ span: 22, offset: 2 }}>
 					<Button styleName="btn" type="primary" onClick={this.saveDraft}>保存草稿</Button>
 					{blogId && currentData.blogStatus === "0" &&
 						<Popconfirm
