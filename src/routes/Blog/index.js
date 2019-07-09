@@ -117,7 +117,7 @@ class Blog extends Component {
 			const { form: { setFieldsValue } } = this.props;
 			const { blogTags } = res;
 			this.setState({ tags: blogTags.split(',') });
-			const newData = _.pick(res, ['blogTitle', 'blogContent'])
+			const newData = _.pick(res, ['blogTitle', 'blogContent', 'blogDescription'])
 			setFieldsValue(newData);
 		}
 		this.props.getBlogDetail(params, callback)
@@ -138,7 +138,8 @@ class Blog extends Component {
 				if (res) {
 					setFieldsValue({
 						blogTitle: '',
-						blogContent: '',
+            blogContent: '',
+            blogDescription: '',
 					})
 					this.setState({ tags: [] })
 				}
