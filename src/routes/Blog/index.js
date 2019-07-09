@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Form, Input, Tag, Icon, Popconfirm, Upload } from 'antd';
+import { Button, Form, Input, Tag, Icon, Popconfirm, Upload, message } from 'antd';
 import CSSModules from 'react-css-modules';
 import ReactMde from 'react-mde';
 import imageConversion from 'image-conversion';
@@ -225,25 +225,16 @@ class Blog extends Component {
 	}
 
 	uploadImg = (file) => {
-		const formData = new FormData();
+    const formData = new FormData();
+    const { form: { getFieldValue, setFieldsValue } } = this.props;
 		// 由于post传输文件的特殊性，所以需要构造form键值对
 		formData.append("blogImg", file)
 		// 文件上传时不需要添加header
 		const callback = (data) => {
-			const url = data.data;
-			const arrUrl = url.split('/')
-			const name = arrUrl[arrUrl.length - 1];
-			const { fileList } = this.state;
-			fileList.push({
-				status: 'done',
-				name,
-				uid: file.uid,
-				url: data.data
-			})
-			this.setState({
-				fileList
-			})
-			message.success('上传成功');
+      message.success('上传成功');
+      const blogContent = getFieldValue('blogContent');
+      const newBlogContent = `${blogContent}![](${data.data})`
+      setFieldsValue({ blogContent: newBlogContent })
 		}
 		this.props.uploadImg(formData, callback)
 	}
@@ -286,7 +277,8 @@ class Blog extends Component {
 	renderUplodaImg() {
 		const props = {
 			customRequest: this.handleUpload,
-			accept: '.jpg, .jpeg, .png, .gif',
+      accept: '.jpg, .jpeg, .png, .gif',
+      showUploadList: false
 		}
 		return (
 			<Upload {...props} styleName="upload">
