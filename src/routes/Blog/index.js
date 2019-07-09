@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Form, Input, Tag, Icon, Popconfirm } from 'antd';
+import { Button, Form, Input, Tag, Icon, Popconfirm, Upload } from 'antd';
 import CSSModules from 'react-css-modules';
 import ReactMde from 'react-mde';
+import imageConversion from 'image-conversion';
 import * as Showdown from 'showdown';
 import _ from 'lodash';
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -63,6 +64,13 @@ const mapDisaptchToProps = (dispatch) => ({
 		dispatch({
 			type: `${model.namespace}/offlineBlog`,
 			payload: params,
+		})
+	},
+	uploadImg(params, callback) {
+		dispatch({
+			type: `${model.namespace}/uploadImg`,
+			payload: params,
+			callback
 		})
 	}
 })
@@ -216,6 +224,77 @@ class Blog extends Component {
 		)
 	}
 
+	uploadImg = (file) => {
+		const formData = new FormData();
+		// 由于post传输文件的特殊性，所以需要构造form键值对
+		formData.append("blogImg", file)
+		// 文件上传时不需要添加header
+		const callback = (data) => {
+			const url = data.data;
+			const arrUrl = url.split('/')
+			const name = arrUrl[arrUrl.length - 1];
+			const { fileList } = this.state;
+			fileList.push({
+				status: 'done',
+				name,
+				uid: file.uid,
+				url: data.data
+			})
+			this.setState({
+				fileList
+			})
+			message.success('上传成功');
+		}
+		this.props.uploadImg(formData, callback)
+	}
+
+	compressImg = async (file) => {
+		const fileAttribute = _.pick(file, ['type', 'lastModified', 'lastModifiedDate']);
+		const blogObj = await imageConversion.compressAccurately(file, 1000)
+		if (blogObj) {
+			const newSize = (blogObj.size / (1024 * 1024)).toFixed(2);
+			message.success(`压缩成功，压缩之后的大小为${newSize}MB，开始上传`)
+			const fileObj = new File([blogObj], file.name, fileAttribute)
+			fileObj.uid = file.uid;
+			this.uploadImg(fileObj);
+		}
+	}
+
+	handleUpload = (files) => {
+		const { file } = files;
+		if (file.size > (1024 * 1024)) {
+			const size = (file.size / (1024 * 1024)).toFixed(1);
+			Modal.confirm({
+				title: '上传提示',
+				onOk: this.compressImg.bind(this, file),
+				width: 550,
+				okText: '确认',
+				cancelText: '取消',
+				content: (
+					<div>
+						<h3>上传的图片大小不能超过1MB，您当前的图片大小为{size}MB</h3>
+						<p>点击『确认』我们将自动压缩您的图片并上传</p>
+						<p>点击『取消』您可手动压缩图片再次上传</p>
+					</div>
+				)
+			})
+		} else {
+			this.uploadImg(file);
+		}
+	}
+
+	renderUplodaImg() {
+		const props = {
+			customRequest: this.handleUpload,
+			accept: '.jpg, .jpeg, .png, .gif',
+		}
+		return (
+			<Upload {...props} styleName="upload">
+				<span>上传本地图片</span>
+			</Upload>
+		)
+	}
+
 	renderContent() {
 		const { form: { getFieldDecorator }, currentData } = this.props;
 		const { tags, showInput, selectedTab, blogId } = this.state;
@@ -242,7 +321,7 @@ class Blog extends Component {
 						{showInput ? this.renderAddInput() : this.renderAddTag()}
 					</Fragment>}
 				</FormItem>
-				<FormItem label="内容" {...formLayout}>
+				<FormItem label="内容" {...formLayout} styleName="markdown">
 					{
 						getFieldDecorator('blogContent')(
 							<ReactMde
@@ -254,6 +333,7 @@ class Blog extends Component {
 							/>
 						)
 					}
+					{this.renderUplodaImg()}
 				</FormItem>
 				<FormItem wrapperCol={{ span: 22, offset: 2 }}>
 					<Button styleName="btn" type="primary" onClick={this.saveDraft}>保存草稿</Button>

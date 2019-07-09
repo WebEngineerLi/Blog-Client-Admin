@@ -4,7 +4,6 @@
   .menu {
     width: 155px;
     flex: 0 1 auto;
-    border-left: 1px solid red;
     padding-right: 1px;
     height: 100%;
   }
@@ -16,6 +15,20 @@
 			max-width: 1500px;
 			min-width: 800px;
 			overflow-x: auto;
+			.markdown {
+				position: relative;	
+				:global {
+					.ant-form-item-children {
+						position: static;
+					}
+				}
+				.upload {
+					position: absolute;
+					right: 200px;
+					cursor: pointer;
+					top: 15px;
+				}
+			}
 		}
 	}
 	.btn {

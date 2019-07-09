@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "antd": "^3.20.0",
+    "image-conversion": "^1.1.9",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-css-modules": "^4.7.11",

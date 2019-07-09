@@ -13,3 +13,5 @@ export const blogDelete = (config = {}) => request(`${baseUrl}/service/blog/dele
 export const publishBlog = (config = {}) => request(`${baseUrl}/service/blog/publish`, config)
 
 export const offlineBlog = (config = {}) => request(`${baseUrl}/service/blog/offline`, config)
+
+export const uploadImg = (config = {}) => request(`${baseUrl}/service/upload/img`, config)

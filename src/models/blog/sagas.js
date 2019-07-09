@@ -82,6 +82,14 @@ function *offlineBlog({ payload }) {
 	}
 }
 
+function *uploadImg({ payload, callback = '' }) {
+	const params = {
+		body: payload,
+		method: 'post'
+	}
+	const res = yield call(services.uploadImg, params)
+	res.success && callback && callback(res)
+}
 
 // 导出一个对本模块监听的saga文件 
 export default function* blogSagas() {
@@ -92,4 +100,5 @@ export default function* blogSagas() {
 	yield takeEvery(`${NAMESPACE}/blogDelete`, blogDelete)
 	yield takeEvery(`${NAMESPACE}/publishBlog`, publishBlog)
 	yield takeEvery(`${NAMESPACE}/offlineBlog`, offlineBlog)
+	yield takeEvery(`${NAMESPACE}/uploadImg`, uploadImg)
 }
