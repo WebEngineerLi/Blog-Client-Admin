@@ -33,7 +33,6 @@
 				"style": true // `style: true` 会加载 less 文件
 			}
 		],
-    "@babel/transform-arrow-functions", // babel v7中舍弃了 stage-x 所以只能用plugin来处理 箭头函数
-    "transform-es2015-modules-commonjs"
+    "@babel/transform-arrow-functions" // babel v7中舍弃了 stage-x 所以只能用plugin来处理 箭头函数
 	]
 }
