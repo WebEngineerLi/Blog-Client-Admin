@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const handler = (percentage, message, ...args) => {
   // e.g. Output each progress message directly to the console:
-	console.info(`[${percentage.toFixed(2) * 100}%]`, message, args[0], args[1]);
+	// console.info(`[${percentage.toFixed(2) * 100}%]`, message, args[0], args[1]);
 };
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -15,7 +15,8 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, '../dist'),
+		path: path.resolve(__dirname, '../dist'),
+		publicPath: '/'
 	},
 	resolve: {
 		alias: {
@@ -23,11 +24,6 @@ module.exports = {
 		},
 		extensions: ['.wasm', '.mjs', '.js', '.json']  // 省略扩展
 	},
-	optimization: {
-    splitChunks: {
-			chunks: "all", // 所有的 chunks 代码公共的部分分离出来成为一个单独的文件
-    },
-  },
   module: {
     rules: [
       {
@@ -88,9 +84,8 @@ module.exports = {
             loader: 'less-loader',
             options: {
               modifyVars: {
-                'primary-color': '#1DA57A',
-                'link-color': '#1DA57A',
-                'border-radius-base': '2px',
+                'primary-color': '#948c76',
+                'link-color': '#948c76',
                  // or
                 //  'hack': `true; @import "your-less-file-path.less";`, // Override with less file
                },

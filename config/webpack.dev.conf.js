@@ -1,17 +1,28 @@
 const path = require('path');
 const base = require('./webpack.base.conf.js');
 const merge = require('webpack-merge');
+const webpack = require('webpack');
 
 module.exports = merge(base, {
   devtool: 'eval-source-map',
   mode: 'development',
   devServer: {
     hot: true,
-    contentBase: path.resolve(__dirname, 'dist'),
-    port: '1111',
+		contentBase: './',
+    port: '2222',
     inline: true,
 		open: true,
 		historyApiFallback: true,
+    publicPath: '/',
+    // proxy: {
+    //   '/service/blog': {
+    //     target: 'http://localhost:7001',
+    //     changeOrigin: true,
+    //   },
+    //   '/service/upload': {
+    //     target: 'http://localhost:7001',
+    //   }
+    // }
 	},
 	module: {
 		rules: [
@@ -27,5 +38,10 @@ module.exports = merge(base, {
 				}],
 			}
 		]
-	}
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'BASE_URL': JSON.stringify('http://localhost:7001')
+		})
+	]
 })
