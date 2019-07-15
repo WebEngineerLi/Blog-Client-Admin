@@ -12,7 +12,7 @@ const renderMenuItem = (data) => {
 
 const BlogMenu = (props) => {
   return (
-    <Menu styleName="menu" onSelect={props.onSelect}>
+    <Menu styleName="menu" onSelect={props.onSelect} selectedKeys={props.selectedKeys}>
       {renderMenuItem(props.blogList)}
     </Menu>
   )
