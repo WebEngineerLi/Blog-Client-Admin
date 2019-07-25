@@ -4,7 +4,6 @@
 			"@babel/preset-env", // es2015+
 			{
 				"targets": {
-          // "chrome": "45"
           "browsers": "chrome >= 45"
 				}
 			}
