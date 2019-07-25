@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Form, Input, Tag, Icon, Popconfirm, Upload, message } from 'antd';
+import { Button, Form, Input, Tag, Icon, Popconfirm, Upload, message, Modal } from 'antd';
 import CSSModules from 'react-css-modules';
 import ReactMde from 'react-mde';
 import imageConversion from 'image-conversion';

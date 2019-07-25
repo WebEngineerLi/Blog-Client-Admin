@@ -22,6 +22,11 @@
 					.ant-form-item-children {
 						position: static;
 					}
+					.mde-preview-content {
+						img {
+							max-width: 100%;
+						}
+					}
 				}
 				.upload {
 					position: absolute;

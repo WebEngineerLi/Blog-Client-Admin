@@ -1,8 +1,9 @@
 const webpack = require('webpack');
 const base = require('./webpack.base.conf.js');
 const merge = require('webpack-merge');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const path = require('path');
 
 module.exports = merge(base, {
@@ -46,19 +47,29 @@ module.exports = merge(base, {
 	},
 	// 解决rom UglifyJs Unexpected token: keyword «function», expected: punc «;» 的办法： 1.babel-loader去掉 exclude: /node_modules/ 2. uglifyjs-webpack-plugin插件需要升级到uglifyjs-webpack-plugin": "^1.3.0"
 	plugins: [
-		new UglifyJsPlugin({
-      uglifyOptions: {
-        ie8: false,
-        mangle: true,
-        output: { comments: false },
+		new ParallelUglifyPlugin({
+      test: /\.jsx?/,
+      cacheDir: '../dist/cache',
+      workerCount: 10,
+			sourceMap: false,
+      uglifyES: {
+        output: {
+          // 最紧凑的输出
+          beautify: false,
+          // 删除所有的注释
+          comments: false,
+        },
         compress: {
+          // 在UglifyJs删除没有用到的代码时不输出警告
+          warnings: false,
+          // 删除所有的 `console` 语句，可以兼容ie浏览器
           drop_console: true,
-          drop_debugger: true,
-          unused: false,
+          // 内嵌定义了但是只用到一次的变量
+          collapse_vars: true,
+          // 提取出出现多次但是没有定义成变量去引用的静态值
+          reduce_vars: true,
         },
       },
-      sourceMap: true,
-      cache: true,
     }),
 		new webpack.DefinePlugin({
 			'BASE_URL': JSON.stringify('http://www.mingyangli.com:7001')
