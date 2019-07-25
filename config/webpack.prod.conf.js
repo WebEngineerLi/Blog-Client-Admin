@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const base = require('./webpack.base.conf.js');
 const merge = require('webpack-merge');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const path = require('path');
