@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
 const handler = (percentage, message, ...args) => {
   // e.g. Output each progress message directly to the console:
-	// console.info(`[${percentage.toFixed(2) * 100}%]`, message, args[0], args[1]);
+  // console.info(`[${percentage.toFixed(2) * 100}%]`, message, args[0], args[1]);
 };
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -15,15 +15,15 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
-		path: path.resolve(__dirname, '../dist'),
-		publicPath: '/'
-	},
-	resolve: {
-		alias: {
-			Utils: path.resolve(__dirname, '../src/utils')  // 命名
-		},
-		extensions: ['.wasm', '.mjs', '.js', '.json']  // 省略扩展
-	},
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/'
+  },
+  resolve: {
+    alias: {
+      Utils: path.resolve(__dirname, '../src/utils')  // 命名
+    },
+    extensions: ['.wasm', '.mjs', '.js', '.json']  // 省略扩展
+  },
   module: {
     rules: [
       {
@@ -46,68 +46,68 @@ module.exports = {
       },
       {
         test: /\.css$/,
-				exclude: '/node-modules',
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							publicPath: '../',
-						}
-					}, {
-						loader: 'css-loader',
-					},
-					'postcss-loader'
-				]
+        exclude: '/node-modules',
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            }
+          }, {
+            loader: 'css-loader',
+          },
+          'postcss-loader'
+        ]
       },
       {
         test: /\.less$/,
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							publicPath: '../',
-						}
-					}, {
-						loader: 'css-loader',
-						// options: {
-						// 	modules: true,
-						// 	localIdentName: '[path]__[name]__[local]__[hash:base64:6]'
-						// }
-					},
-					'postcss-loader',
-					{
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            }
+          }, {
+            loader: 'css-loader',
+            // options: {
+            // 	modules: true,
+            // 	localIdentName: '[path]__[name]__[local]__[hash:base64:6]'
+            // }
+          },
+          'postcss-loader',
+          {
             loader: 'less-loader',
             options: {
               modifyVars: {
-                'primary-color': '#948c76',
-                'link-color': '#948c76',
-                 // or
+                'primary-color': '#1DA57A',
+                'link-color': '#1DA57A',
+                // or
                 //  'hack': `true; @import "your-less-file-path.less";`, // Override with less file
-               },
+              },
               javascriptEnabled: true
             }
           }
-				]
+        ]
       },
       {
         test: /\.scss$|\.sass$/,
-				exclude: '/node-modules',
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-						options: {
-							publicPath: '../',
-						}
-					}, {
-						loader: 'css-loader',
-						options: {
-							modules: true,
-							localIdentName: '[path]__[name]__[local]__[hash:base64:6]'
-						}
-					},
-					'postcss-loader',
-					'sass-loader'
-				]
+        exclude: '/node-modules',
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../',
+            }
+          }, {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[path]__[name]__[local]__[hash:base64:6]'
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -119,10 +119,10 @@ module.exports = {
       template: path.join(__dirname, '../src/template.html') // 指定模板路径
     }),
     new Webpack.ProgressPlugin(handler),
-		// new MiniCssExtractPlugin({
-		// 	filename:"main.css"
-		// })
-		new MiniCssExtractPlugin({
+    // new MiniCssExtractPlugin({
+    // 	filename:"main.css"
+    // })
+    new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
     })
