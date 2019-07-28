@@ -72,7 +72,7 @@ module.exports = merge(base, {
       },
     }),
 		new webpack.DefinePlugin({
-			'BASE_URL': JSON.stringify('http://www.mingyangli.com:7001')
+			'BASE_URL': JSON.stringify('https://www.mingyangli.com')
 		}),
 		new CompressionPlugin({
       filename: '[path].gz[query]',
