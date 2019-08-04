@@ -41,7 +41,7 @@ module.exports = merge(base, {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			'BASE_URL': JSON.stringify('http://39.97.243.148:7001')
+			'BASE_URL': JSON.stringify('http://localhost:7001')
 		})
 	]
 })
