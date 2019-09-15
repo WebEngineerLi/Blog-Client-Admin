@@ -236,6 +236,7 @@ class Blog extends Component {
     const formData = new FormData();
     const { form: { getFieldValue, setFieldsValue } } = this.props;
     // 由于post传输文件的特殊性，所以需要构造form键值对
+    formData.append("file", file)
     // 文件上传时不需要添加header
     const callback = (data) => {
       message.success('上传成功');
