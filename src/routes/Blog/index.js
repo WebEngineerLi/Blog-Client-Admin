@@ -236,23 +236,14 @@ class Blog extends Component {
     const formData = new FormData();
     const { form: { getFieldValue, setFieldsValue } } = this.props;
     // 由于post传输文件的特殊性，所以需要构造form键值对
-    formData.append("file", file)
-    window.fetch('http://dev-api.tunnel.cnblogs.com/admin-server/upload/icon', {
-      headers: {
-        'Authentication': 'b25e39b47e774b4a05b3cb1555fc377f209457c3fd339d373d3fca7b1ea8be56fdc6ed05b7ffb0700e7300d242fb83b5ffeb82da6f19f87d07c38776829f4096c2f2c5bb1aee06516ac35f1f6a012849f0c0e9fec2484c80feb81b0b8e7d7a6ad55e3c3b305d9299b440bbb7bbfec28c074b88487a84273f75a302469cff4c2e58709bf0034cd4d2'
-      },
-      body: formData,
-      method: 'POST'
-
-    })
     // 文件上传时不需要添加header
-    // const callback = (data) => {
-    //   message.success('上传成功');
-    //   const blogContent = getFieldValue('blogContent');
-    //   const newBlogContent = `${blogContent}![](${data.data})`
-    //   setFieldsValue({ blogContent: newBlogContent })
-    // }
-    // this.props.uploadImg(formData, callback)
+    const callback = (data) => {
+      message.success('上传成功');
+      const blogContent = getFieldValue('blogContent');
+      const newBlogContent = `${blogContent}![](${data.data})`
+      setFieldsValue({ blogContent: newBlogContent })
+    }
+    this.props.uploadImg(formData, callback)
   }
 
   compressImg = async (file) => {
