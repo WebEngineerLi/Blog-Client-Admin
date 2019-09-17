@@ -102,6 +102,16 @@ class Blog extends Component {
 
   componentDidMount() {
     this.props.getBlogList();
+    this.timer = setInterval(() => {
+      if (this.state.blogId) {
+        // 三分钟自动保存一次
+        this.saveDraft();
+      }
+    }, 1000 * 60 * 3)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
   }
 
   handleCreate = () => {
