@@ -9,3 +9,8 @@ export const getCurrentData = (state) => {
 	const currentState = getState(state);
 	return currentState.currentData
 }
+
+export const getTabs = (state) => {
+	const currentState = getState(state);
+	return currentState.tabs;
+}

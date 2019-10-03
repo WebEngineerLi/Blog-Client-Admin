@@ -2,6 +2,8 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Webpack = require('webpack');
+const SimpleProgressPlugin = require('webpack-simple-progress-plugin');
+const chalk = require('chalk');
 const handler = (percentage, message, ...args) => {
   // e.g. Output each progress message directly to the console:
   // console.info(`[${percentage.toFixed(2) * 100}%]`, message, args[0], args[1]);
@@ -118,7 +120,17 @@ module.exports = {
       filename: 'index.html', // 最终创建的文件名: 注意相对的路径是output.path
       template: path.join(__dirname, '../src/template.html') // 指定模板路径
     }),
-    new Webpack.ProgressPlugin(handler),
+    new SimpleProgressPlugin({
+      messageTemplate: [':bar', chalk.green(':percent'), ':msg'].join(' '),
+      progressOptions: {
+        complete: chalk.bgGreen(' '),
+        incomplete: chalk.bgWhite(' '),
+        width: 40,
+        total: 100,
+        clear: true
+      }  
+    }),
+    // new Webpack.ProgressPlugin(handler),
     // new MiniCssExtractPlugin({
     // 	filename:"main.css"
     // })

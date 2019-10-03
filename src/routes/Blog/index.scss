@@ -1,38 +1,56 @@
 .wrap {
-  display: flex;
+  // display: flex;
   height: 100%;
   .menu {
     width: 155px;
     flex: 0 1 auto;
     padding-right: 1px;
     height: calc(100vh - 66px);
-  }
-  .content {
-    flex: 1 1 auto;
-		height: calc(100vh - 66px);
-    width: calc(100vw - 160px);
-    overflow-y: auto;
-		.form {
-			max-width: 1500px;
-			min-width: 800px;
-			overflow-x: auto;
-			.markdown {
-				position: relative;	
-				:global {
-					.ant-form-item-children {
-						position: static;
-					}
-					.mde-preview-content {
-						img {
-							max-width: 100%;
+	}
+	.dynamic-tabs {
+		height: 40px;
+		display: flex;
+		.tabs-title {
+			width: 153px;
+			background: #E6E6E6;
+			color: #fff;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			border-right: 1px solid #fff;
+		}
+	}
+	.content-wrap {
+		display: flex;
+		.content {
+			flex: 1 1 auto;
+			height: calc(100vh - 66px);
+			width: calc(100vw - 160px);
+			overflow-y: auto;
+			// margin-top: 20px;
+			.form {
+				max-width: 1500px;
+				min-width: 800px;
+				overflow-x: auto;
+				margin-top: 20px;
+				.markdown {
+					position: relative;	
+					:global {
+						.ant-form-item-children {
+							position: static;
+						}
+						.mde-preview-content {
+							img {
+								max-width: 100%;
+							}
 						}
 					}
-				}
-				.upload {
-					position: absolute;
-					left: 520px;
-					cursor: pointer;
-					top: 15px;
+					.upload {
+						position: absolute;
+						left: 520px;
+						cursor: pointer;
+						top: 15px;
+					}
 				}
 			}
 		}

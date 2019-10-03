@@ -11,6 +11,7 @@ import styles from './index.scss';
 import { connect } from 'react-redux';
 import { model, selectors } from '../../models/blog';
 import Header from '../../components/Header';
+import DynamicTabs from '../../components/DynamicTabs';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -20,7 +21,8 @@ const formLayout = {
 }
 const mapStateToProps = (state) => ({
   blogList: selectors.blogList(state),
-  currentData: selectors.getCurrentData(state)
+  currentData: selectors.getCurrentData(state),
+  tabs: selectors.getTabs(state)
 })
 const mapDisaptchToProps = (dispatch) => ({
   saveBlog(params, callback) {
@@ -72,6 +74,12 @@ const mapDisaptchToProps = (dispatch) => ({
       type: `${model.namespace}/uploadImg`,
       payload: params,
       callback
+    })
+  },
+  dump(params) {
+    dispatch({
+      type: `${model.NAMESPACE}/saveInfo`,
+      payload: params
     })
   }
 })
@@ -140,11 +148,16 @@ class Blog extends Component {
       blogId: key
     }
     const callback = (res) => {
-      const { form: { setFieldsValue } } = this.props;
+      const { form: { setFieldsValue }, tabs = [] } = this.props;
       const { blogTags } = res;
       this.setState({ tags: blogTags.split(',') });
       const newData = _.pick(res, ['blogTitle', 'blogContent', 'blogDescription'])
       setFieldsValue(newData);
+      const find = tabs.find(item => item.id === key)
+      if (!find) {
+        tabs.push({ id: key, title: newData.blogTitle })
+        this.props.dump({ tabs });
+      }
     }
     this.props.getBlogDetail(params, callback)
   }
@@ -382,17 +395,31 @@ class Blog extends Component {
     )
   }
   render() {
-    const { blogList } = this.props;
+    const { blogList, tabs } = this.props;
     const { blogId } = this.state;
     return (
       <Fragment>
         <Header onCreate={this.handleCreate} blogId={blogId} />
         <div styleName="wrap">
-          <div styleName="menu">
-            <BlogMenu {...this.props} blogList={blogList} onSelect={this.handleSelect} selectedKeys={[this.state.blogId]} />
+          <div styleName="dynamic-tabs">
+            <div styleName="tabs-title">|||</div>
+            <DynamicTabs
+              tabs={tabs}
+              activeKey={blogId}
+              onChange={(activeKey) => {
+                this.setState({ blogId: activeKey })
+                this.handleSelect({ key: activeKey })
+              }}
+              onDump={this.props.dump}
+            />
           </div>
-          <div styleName="content">
-            {this.renderContent()}
+          <div styleName="content-wrap">
+            <div styleName="menu">
+              <BlogMenu {...this.props} blogList={blogList} onSelect={this.handleSelect} selectedKeys={[this.state.blogId]} />
+            </div>
+            <div styleName="content">
+              {this.renderContent()}
+            </div>
           </div>
         </div>
       </Fragment>
