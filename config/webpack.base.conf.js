@@ -81,12 +81,12 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: {
-                'primary-color': '#1DA57A',
-                'link-color': '#1DA57A',
-                // or
-                //  'hack': `true; @import "your-less-file-path.less";`, // Override with less file
-              },
+              // modifyVars: {
+              //   'primary-color': '#1DA57A',
+              //   'link-color': '#1DA57A',
+              //   // or
+              //   //  'hack': `true; @import "your-less-file-path.less";`, // Override with less file
+              // },
               javascriptEnabled: true
             }
           }

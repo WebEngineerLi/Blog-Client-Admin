@@ -1,44 +1,33 @@
 .tabs-wrap {
   background: #fff;
-  // border-bottom: 0!important;
-  :global {
-    .ant-tabs-bar {
-      border-bottom: 0;
-    }
-    .ant-tabs-card > .ant-tabs-content {
-      margin-top: -16px;
-    }
-    .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
-      background: #fff;
-    }
-    
-    .ant-tabs-card > .ant-tabs-bar {
-      border-color: #E7EAED;
-    }
-    
-    .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
-      border-color: transparent;
-      margin-right: 2px;
-      background: #E6E6E6;
-      border-top: 3px solid #E6E6E6;
-      border-radius: 0;
-      // height: 34px;
-      // line-height: 34px;
-    }
-    
-    .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
-      border-color: #fff;
-      background: #f5f5f5!important;
-      border-radius: 0;
-      border-top: 3px solid #439039;
-      i {
-        color: #439039!important;
-      }
-    }
+}
+:global {
+  .card-container > .ant-tabs-card > .ant-tabs-content {
+    height: 120px;
+    margin-top: -16px;
+  }
+  
+  .card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+    background: #fff;
+    padding: 16px;
+  }
+  
+  .card-container > .ant-tabs-card > .ant-tabs-bar {
+    border-color: #fff;
+  }
+  
+  .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+    border-color: transparent;
+    background: transparent;
+  }
+  
+  .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+    border-color: #fff;
+    background: #fff;
   }
 }
 .tab {
-  width: 60px;
+  width: 100px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -46,6 +35,3 @@
   display: inline-block;
   vertical-align: middle;
 }
-
-// #1DA57A
-// ant-tabs-tab-active

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, Form, Input, Tag, Icon, Popconfirm, Upload, message, Modal } from 'antd';
 import CSSModules from 'react-css-modules';
 import ReactMde from 'react-mde';
-import imageConversion from 'image-conversion';
+// import imageConversion from 'image-conversion';
 import * as Showdown from 'showdown';
 import _ from 'lodash';
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -270,33 +270,19 @@ class Blog extends Component {
     this.props.uploadImg(formData, callback)
   }
 
-  compressImg = async (file) => {
-    const fileAttribute = _.pick(file, ['type', 'lastModified', 'lastModifiedDate']);
-    const blogObj = await imageConversion.compressAccurately(file, 1000)
-    if (blogObj) {
-      const newSize = (blogObj.size / (1024 * 1024)).toFixed(2);
-      message.success(`压缩成功，压缩之后的大小为${newSize}MB，开始上传`)
-      const fileObj = new File([blogObj], file.name, fileAttribute)
-      fileObj.uid = file.uid;
-      this.uploadImg(fileObj);
-    }
-  }
-
   handleUpload = (files) => {
     const { file } = files;
     if (file.size > (1024 * 1024)) {
       const size = (file.size / (1024 * 1024)).toFixed(1);
       Modal.confirm({
         title: '上传提示',
-        onOk: this.compressImg.bind(this, file),
+        // onOk: this.compressImg.bind(this, file),
         width: 550,
         okText: '确认',
         cancelText: '取消',
         content: (
           <div>
             <h3>上传的图片大小不能超过1MB，您当前的图片大小为{size}MB</h3>
-            <p>点击『确认』我们将自动压缩您的图片并上传</p>
-            <p>点击『取消』您可手动压缩图片再次上传</p>
           </div>
         )
       })
@@ -321,7 +307,6 @@ class Blog extends Component {
   renderContent() {
     const { form: { getFieldDecorator }, currentData } = this.props;
     const { tags, showInput, selectedTab, blogId } = this.state;
-
     return (
       <Form layout="horizontal" styleName="form">
         <FormItem label="标题" {...formLayout}>
@@ -401,21 +386,25 @@ class Blog extends Component {
       <Fragment>
         <Header onCreate={this.handleCreate} blogId={blogId} />
         <div styleName="wrap">
-          <div styleName="dynamic-tabs">
-            <div styleName="tabs-title">|||</div>
-            <DynamicTabs
-              tabs={tabs}
-              activeKey={blogId}
-              onChange={(activeKey) => {
-                this.setState({ blogId: activeKey })
-                this.handleSelect({ key: activeKey })
-              }}
-              onDump={this.props.dump}
+          <div styleName="menu">
+            <BlogMenu
+              {...this.props}
+              blogList={blogList}
+              onSelect={this.handleSelect}
+              selectedKeys={[this.state.blogId]}
             />
           </div>
           <div styleName="content-wrap">
-            <div styleName="menu">
-              <BlogMenu {...this.props} blogList={blogList} onSelect={this.handleSelect} selectedKeys={[this.state.blogId]} />
+            <div styleName="dynamic-tabs">
+              <DynamicTabs
+                tabs={tabs}
+                activeKey={blogId}
+                onChange={(activeKey) => {
+                  this.setState({ blogId: activeKey })
+                  this.handleSelect({ key: activeKey })
+                }}
+                onDump={this.props.dump}
+              />
             </div>
             <div styleName="content">
               {this.renderContent()}

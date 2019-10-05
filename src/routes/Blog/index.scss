@@ -1,8 +1,8 @@
 .wrap {
-  // display: flex;
-  height: 100%;
+	height: 100%;
+	display: flex;
   .menu {
-    width: 155px;
+    width: 200px;
     flex: 0 1 auto;
     padding-right: 1px;
     height: calc(100vh - 66px);
@@ -10,6 +10,7 @@
 	.dynamic-tabs {
 		height: 40px;
 		display: flex;
+		box-shadow: inset 0 0 3px 2px hsla(0,0%,39.2%,.1);
 		.tabs-title {
 			width: 153px;
 			background: #E6E6E6;
@@ -21,9 +22,7 @@
 		}
 	}
 	.content-wrap {
-		display: flex;
 		.content {
-			flex: 1 1 auto;
 			height: calc(100vh - 66px);
 			width: calc(100vw - 160px);
 			overflow-y: auto;
