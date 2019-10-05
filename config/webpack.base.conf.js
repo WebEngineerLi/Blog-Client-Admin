@@ -44,7 +44,8 @@ module.exports = {
       },
       {
         test: /\.jsx?/,
-				loader: 'babel-loader',
+        loader: 'babel-loader',
+        query: { compact: false }
       },
       {
         test: /\.css$/,
@@ -130,13 +131,12 @@ module.exports = {
         clear: true
       }  
     }),
-    // new Webpack.ProgressPlugin(handler),
-    // new MiniCssExtractPlugin({
-    // 	filename:"main.css"
-    // })
+
+    // 将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap
+    // 只能用在webpack4中，对比另一个插件
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "[id].css"
+      chunkFilename: "[id].min.css"
     })
   ]
 }
