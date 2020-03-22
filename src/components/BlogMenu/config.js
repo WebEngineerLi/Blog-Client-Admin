@@ -2,11 +2,15 @@ import React from 'react';
 import { Icon } from 'antd'
 
 export default [{
-  key: 'article',
-  icon: <Icon type="delete" />,
+  key: '/article',
+  icon: <Icon type="file-text" />,
   label: '文章管理'
 }, {
-  key: 'message',
+  key: '/message',
   icon: <Icon type="message" />,
-  label: '评论管理'
+  label: '留言管理'
+}, {
+  key: '/cv',
+  icon: <Icon type="message" />,
+  label: '简历编辑'
 }]

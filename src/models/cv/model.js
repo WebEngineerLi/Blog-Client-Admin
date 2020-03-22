@@ -2,13 +2,11 @@ import { handleActions } from 'redux-actions';
 import { NAMESPACE } from './constants';
 
 const initState = {
-	blogList: [],
-	currentData: {},
-	tabs: []
+	cv: {}
 };
 
 // 定义并导出reducers
-const blogReducers = handleActions({
+const cvReducers = handleActions({
   [`${NAMESPACE}/saveInfo`]: (state, { payload }) => {
 		return {
 		...state,
@@ -18,6 +16,6 @@ const blogReducers = handleActions({
 
 export const model = {
 	initState,
-	reducers: blogReducers,
+	reducers: cvReducers,
 	namespace: NAMESPACE
 }

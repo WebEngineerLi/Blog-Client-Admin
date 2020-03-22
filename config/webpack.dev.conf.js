@@ -41,8 +41,8 @@ module.exports = merge(base, {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			// 'BASE_URL': JSON.stringify('http://localhost:7001')
-			'BASE_URL': JSON.stringify('https://www.mingyangli.com')
+			'BASE_URL': JSON.stringify('http://localhost:7001')
+			// 'BASE_URL': JSON.stringify('https://www.mingyangli.com')
 		})
 	]
 })

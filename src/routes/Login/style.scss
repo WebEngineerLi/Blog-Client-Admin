@@ -1,0 +1,57 @@
+.loginWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  background: url("../../images/bgb.png") 50% no-repeat;
+  > div {
+    width: 400px;
+    height: 550px;
+  }
+  .login {
+    background-color: #fff;
+    box-shadow: 0 7px 14px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 11.2px;
+    padding: 56px 44px;
+    .title {
+      margin-bottom: 50px;
+      font-weight: 700;
+      width: 100%;
+      font-size: 22px;
+      color: #3196fa;
+      text-align: center;
+    }
+    canvas {
+      margin-left: 30px;
+    }
+    :global {
+      .ant-input {
+        height: 45px;
+        border-radius: 40px;
+        &:hover {
+          border: 1px solid #d9d9d9;
+        }
+        &:focus {
+          box-shadow: 0 10px 5px rgba(210, 210, 210, 0.5) !important;
+          border: none;
+        }
+      }
+      .ant-form-explain {
+        margin-top: 10px;
+      }
+      .has-error .ant-input-affix-wrapper .ant-input,
+      .has-error .ant-input-affix-wrapper .ant-input:hover {
+        border: 1px solid #d9d9d9;
+      }
+      .ant-btn-primary {
+        width: 312px;
+        height: 50px;
+        line-height: 50px;
+        background-color: #1890ff;
+        border-color: #1890ff;
+        border-radius: 40px;
+        margin-top: 20px;
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { NAMESPACE } from './constants';
 import * as services from './services';
+import { addCookie } from 'Utils/cookie';
 import { message } from 'antd';
 
 // 一些saga的副作用
@@ -91,6 +92,18 @@ function *uploadImg({ payload, callback = '' }) {
 	res.success && callback && callback(res)
 }
 
+function *login({ payload, callback = '' }) {
+	const params = {
+		body: payload,
+		method: 'post'
+	}
+	const res = yield call(services.login, params)
+	if (res.success) {
+		callback && callback(res)
+		addCookie('userInfo', JSON.stringify(res.data), 60 * 60 * 24)
+	}
+}
+
 // 导出一个对本模块监听的saga文件 
 export default function* blogSagas() {
 	yield takeEvery(`${NAMESPACE}/saveBlog`, saveBlog)
@@ -101,4 +114,5 @@ export default function* blogSagas() {
 	yield takeEvery(`${NAMESPACE}/publishBlog`, publishBlog)
 	yield takeEvery(`${NAMESPACE}/offlineBlog`, offlineBlog)
 	yield takeEvery(`${NAMESPACE}/uploadImg`, uploadImg)
+	yield takeEvery(`${NAMESPACE}/login`, login)
 }

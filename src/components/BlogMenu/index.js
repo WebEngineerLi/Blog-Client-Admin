@@ -1,20 +1,22 @@
-import React, { Fragment, useState } from 'react';
-import { Menu, Icon, Button } from 'antd';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, Icon } from 'antd';
 import CSSModules from 'react-css-modules';
 import styles from './index.scss';
 import defaultMenu from './config';
 
 const { Item, SubMenu } = Menu;
 
-const BlogMenu = (props) => {
-
-  const { blogList } = props;
-  defaultMenu[0].children = blogList;
-
+const BlogMenu = ({
+  location: {
+    pathname
+  }
+}) => {
+  console.log('pathname:', pathname)
   const renderMenuItem = (data) => {
     return data && Array.isArray(data) && data.map(item => {
       if (item.children && Array.isArray(item.children) && item.children.length) {
-        return data.map(item => (
+        return data.map((item) => (
           <SubMenu
             key={item.key}
             icon={item.icon}
@@ -32,22 +34,20 @@ const BlogMenu = (props) => {
       return (
         <Item key={item.key} icon={item.icon}>
           {item.icon}
-          <span>{item.label}</span>
+          <Link style={{ display: 'inline-block' }} to={item.key}>
+            <span>{item.label}</span>
+          </Link>
         </Item>
       )
     })
   }
-  console.log('defaultMenu:', defaultMenu);
-  
   return (
     <Fragment>
       <Menu
         mode="inline"
         theme="dark"
         styleName="menu"
-        onSelect={props.onSelect}
-        selectedKeys={props.selectedKeys}
-        // inlineCollapsed={collapsed}
+        selectedKeys={pathname}
       >
         {renderMenuItem(defaultMenu)}
       </Menu>

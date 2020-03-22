@@ -1,9 +1,6 @@
 import qs from 'querystring';
 import React from 'react';
 import { Modal } from 'antd';
-// import axios from 'axios'
-// import { createBrowserHistory } from 'history';
-// import { clearAllCookie } from '../utils/cookie';
 import _ from 'lodash';
 
 async function parseJSON(response) {
@@ -12,20 +9,10 @@ async function parseJSON(response) {
 	if (rst.success) {
 		return promise;
 	} else {
-    // const close = () => {
-    //   const { code } = rst;
-    //   if(code === "TokenExpiredError") {
-    //     const history = createBrowserHistory();
-    //     clearAllCookie();
-    //     history.replace('/login');
-    //   }
-    // }
 		Modal.error({
 			centered: true,
 			title: '错误反馈',
       content: rst.data || '请求出错',
-      onOk: close,
-      onCancel: close
 		});
 		return promise;
 	}

@@ -22,7 +22,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      Utils: path.resolve(__dirname, '../src/utils')  // 命名
+      Utils: path.resolve(__dirname, '../src/utils'),  // 命名
+      "@": path.resolve(__dirname, '../src')
     },
     extensions: ['.wasm', '.mjs', '.js', '.json']  // 省略扩展
   },

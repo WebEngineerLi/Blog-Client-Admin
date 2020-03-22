@@ -2,11 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { Button, Form, Input, Tag, Icon, Popconfirm, Upload, message, Modal } from 'antd';
 import CSSModules from 'react-css-modules';
 import ReactMde from 'react-mde';
-// import imageConversion from 'image-conversion';
 import * as Showdown from 'showdown';
 import _ from 'lodash';
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import BlogMenu from '../../components/BlogMenu'
 import styles from './index.scss';
 import { connect } from 'react-redux';
 import { model, selectors } from '../../models/blog';
@@ -384,16 +382,7 @@ class Blog extends Component {
     const { blogId } = this.state;
     return (
       <Fragment>
-        <Header onCreate={this.handleCreate} blogId={blogId} />
         <div styleName="wrap">
-          <div styleName="menu">
-            <BlogMenu
-              {...this.props}
-              blogList={blogList}
-              onSelect={this.handleSelect}
-              selectedKeys={[this.state.blogId]}
-            />
-          </div>
           <div styleName="content-wrap">
             <div styleName="dynamic-tabs">
               <DynamicTabs
